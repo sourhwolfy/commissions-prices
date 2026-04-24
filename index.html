@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comissões — sourhwolfy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #090b10;
+    --bg-card:   #0e1018;
+    --bg-raised: #13161f;
+    --gold:      #d4af37;
+    --gold-light: #e8c060;
+    --blue:      #7db1e8;
+    --text:      #d4cfc4;
+    --text-dim:  #8a91a0;
+    --line-gold: rgba(201,168,76,0.18);
+    --line-blue: rgba(91,142,194,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: opacity 0.18s ease;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.45;
+  }
+
+  /* LANGUAGE TOGGLE */
+  .lang-toggle {
+    position: fixed; top: 20px; right: 24px;
+    z-index: 10000; display: flex; align-items: center;
+    border: 1px solid var(--line-gold); overflow: hidden; background: var(--bg-card);
+  }
+  .lang-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 9px 14px; cursor: pointer; border: none;
+    background: transparent; color: var(--text-dim);
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-btn.active { background: rgba(201,168,76,0.12); color: var(--gold); }
+  .lang-btn:not(.active):hover { background: rgba(255,255,255,0.04); color: var(--text); }
+  .lang-divider { width: 1px; height: 16px; background: var(--line-gold); flex-shrink: 0; }
+
+  /* HEADER */
+  header {
+    padding: 64px 56px 48px;
+    border-bottom: 1px solid var(--line-gold);
+    position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute;
+    top: -120px; right: -120px; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  header::after {
+    content: 'COMM'; position: absolute;
+    right: -20px; bottom: -40px;
+    font-size: 180px; font-weight: 700; color: var(--gold);
+    opacity: 0.03; line-height: 1; pointer-events: none; letter-spacing: -8px;
+  }
+  .header-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: var(--blue); margin-bottom: 20px; }
+  .header-name { font-size: clamp(52px, 8vw, 96px); font-weight: 600; letter-spacing: -3px; line-height: 0.95; color: #ece6da; margin-bottom: 6px; }
+  .header-name span { color: var(--gold); font-style: italic; }
+  .header-sub { font-size: 15px; color: var(--text-dim); font-style: italic; margin-top: 20px; max-width: 440px; line-height: 1.6; }
+  .header-aviso {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 28px; padding: 10px 18px;
+    border: 1px solid var(--line-gold); background: rgba(201,168,76,0.05);
+    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gold);
+  }
+  .header-aviso::before { content: '◆'; font-size: 8px; }
+
+  .wrapper { max-width: 1100px; margin: 0 auto; padding: 0 56px; }
+  .secao { padding: 56px 0; border-bottom: 1px solid var(--line-blue); }
+  .secao-label {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--text-dim); margin-bottom: 32px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .secao-label::after { content: ''; flex: 1; height: 1px; background: var(--line-blue); }
+
+  /* SKETCH CARDS */
+  .rascunhos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--line-gold); border: 1px solid var(--line-gold);
+  }
+  .tipo-card { background: var(--bg-card); position: relative; overflow: hidden; transition: background 0.25s; }
+  .tipo-card:hover { background: var(--bg-raised); }
+  .card-img {
+    width: 100%; aspect-ratio: 1 / 1;
+    background: var(--bg-raised); display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid var(--line-gold); overflow: hidden;
+  }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.85; transition: opacity 0.3s, transform 0.4s; }
+  .tipo-card:hover .card-img img { opacity: 1; transform: scale(1.03); }
+  .card-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-dim); }
+  .card-img-placeholder .icon { font-size: 32px; opacity: 0.3; }
+  .card-img-placeholder span { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; }
+  .card-body { padding: 24px 28px 28px; }
+  .card-tipo { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+  .card-nome { font-size: 22px; font-weight: 600; color: #e8e0d0; margin-bottom: 4px; line-height: 1.2; }
+  .card-desc { font-size: 16px; color: var(--text-dim); line-height: 1.4; margin-bottom: 20px; font-style: italic; min-height: 45px; }
+  .card-preco { display: flex; align-items: baseline; gap: 4px; }
+  .preco-symbol { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--gold); opacity: 0.7; }
+  .preco-num { font-size: 40px; font-weight: 600; color: var(--gold); line-height: 1; letter-spacing: -1px; }
+  .preco-alt { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-top: 5px; min-height: 16px; }
+
+  /* CHAPADAS */
+  .chapadas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-blue); border: 1px solid var(--line-blue); }
+  .chapadas-card { background: var(--bg-card); display: grid; grid-template-columns: 1fr 1fr; transition: background 0.2s; }
+  .chapadas-card:hover { background: var(--bg-raised); }
+  .chapadas-img { aspect-ratio: 3/4; background: var(--bg-raised); border-right: 1px solid var(--line-blue); overflow: hidden; }
+  .chapadas-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.85; transition: opacity 0.3s; }
+  .chapadas-card:hover .chapadas-img img { opacity: 1; }
+  .chapadas-body { padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
+  .chapadas-tipo { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .chapadas-nome { font-size: 20px; font-weight: 600; color: #e8e0d0; margin-bottom: 8px; line-height: 1.3; }
+  .chapadas-desc { font-size: 16px; color: var(--text-dim); font-style: italic; line-height: 1.5; }
+  .chapadas-preco { display: flex; align-items: baseline; gap: 4px; margin-top: 20px; }
+
+  /* DESTAQUE */
+  .destaque-section { padding: 56px 0; border-bottom: 1px solid var(--line-gold); }
+  .destaque-card { background: linear-gradient(135deg, #0d1420 0%, #090e18 100%); border: 1px solid var(--line-gold); display: grid; grid-template-columns: 1fr 1.2fr; overflow: hidden; position: relative; }
+  .destaque-card::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%); pointer-events: none; }
+  .destaque-img { aspect-ratio: 3/4; background: rgba(0,0,0,0.3); border-right: 1px solid var(--line-gold); overflow: hidden; }
+  .destaque-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.9; }
+  .destaque-body { padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1; }
+  .destaque-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .destaque-nome { font-size: clamp(28px, 3.5vw, 48px); font-weight: 600; color: var(--gold-light); line-height: 1.15; margin-bottom: 16px; }
+  .destaque-desc { font-size: 16px; color: var(--text); font-style: italic; line-height: 1.7; margin-bottom: 32px; max-width: 360px; }
+  .destaque-precos { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--line-gold); }
+  .destaque-preco-linha { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: rgba(0,0,0,0.3); transition: background 0.2s; gap: 12px; }
+  .destaque-preco-linha:hover { background: rgba(201,168,76,0.06); }
+  .destaque-preco-tipo { font-size: 15px; color: var(--text); }
+  .destaque-preco-val { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--gold); white-space: nowrap; text-align: right; }
+  .destaque-preco-val .alt { display: block; font-size: 10px; color: var(--text-dim); font-weight: 400; letter-spacing: 1px; margin-top: 3px; }
+
+  /* ADICIONAIS */
+  .adicionais-section { padding: 56px 0; border-bottom: 1px solid var(--line-blue); }
+  .adicionais-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line-blue); border: 1px solid var(--line-blue); }
+  .adicional { background: var(--bg-card); padding: 28px; transition: background 0.2s; }
+  .adicional:hover { background: var(--bg-raised); }
+  .adicional-icon { font-size: 24px; margin-bottom: 14px; opacity: 0.6; }
+  .adicional-nome { font-size: 17px; font-weight: 600; color: #e0d8c8; margin-bottom: 6px; }
+  .adicional-desc { font-size: 15px; color: var(--text-dim); font-style: italic; line-height: 1.5; margin-bottom: 16px; }
+  .adicional-val { font-family: 'Space Mono', monospace; font-size: 20px; color: var(--gold); }
+  .adicional-val .alt { display: block; font-size: 11px; color: var(--text-dim); margin-top: 4px; letter-spacing: 1px; }
+
+  /* TERMOS */
+  .termos-section { padding: 48px 0 64px; }
+  .termos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line-gold); border: 1px solid var(--line-gold); }
+  .termo { background: var(--bg-card); padding: 24px 20px; }
+  .termo-titulo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .termo-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; font-style: italic; }
+
+  /* FOOTER */
+  .page-footer { padding: 28px 56px; border-top: 1px solid var(--line-gold); display: flex; justify-content: space-between; align-items: center; }
+  .footer-handle { font-family: 'Space Mono', monospace; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); }
+  .footer-contato { font-size: 14px; color: var(--gold); font-style: italic; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    header, .wrapper, .page-footer { padding-left: 28px; padding-right: 28px; }
+    .rascunhos-grid { grid-template-columns: 1fr 1fr; }
+    .chapadas-grid { grid-template-columns: 1fr; }
+    .destaque-card { grid-template-columns: 1fr; }
+    .destaque-img { aspect-ratio: 16/9; }
+    .adicionais-grid { grid-template-columns: 1fr 1fr; }
+    .termos-grid { grid-template-columns: 1fr 1fr; }
+    .page-footer { flex-direction: column; gap: 12px; }
+  }
+  @media (max-width: 600px) {
+    .rascunhos-grid { grid-template-columns: 1fr; }
+    .chapadas-card { grid-template-columns: 1fr; }
+    .chapadas-img { aspect-ratio: 16/9; border-right: none; border-bottom: 1px solid var(--line-blue); }
+    .adicionais-grid, .termos-grid { grid-template-columns: 1fr; }
+    header { padding: 48px 28px 36px; }
+    .lang-toggle { top: 14px; right: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
+  <div class="lang-divider"></div>
+  <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<header>
+  <div class="header-tag" data-pt="Comissões abertas · sourhwolfy" data-en="Commissions open · sourhwolfy"></div>
+  <div class="header-name">sour<span>wolfy</span></div>
+  <p class="header-sub"
+     data-pt="Ilustração de personagens furry, fantasia e RPG. Personagens grandes, pesados e com peso real."
+     data-en="Furry, fantasy and RPG character illustration. Big, heavy characters with real weight."></p>
+  <div class="header-aviso"
+       data-pt="DMs abertas no Twitter, Bluesky e FurAffinity"
+       data-en="DMs open on Twitter, Bluesky and FurAffinity"></div>
+</header>
+
+<div class="wrapper">
+
+  <!-- RASCUNHOS / SKETCHES -->
+  <section class="secao">
+    <div class="secao-label" data-pt="Rascunhos" data-en="Sketches"></div>
+    <div class="rascunhos-grid">
+
+      <div class="tipo-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">
+            <div class="icon">◎</div>
+            <span data-pt="imagem aqui" data-en="image here"></span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
+          <div class="card-nome" data-pt="Cabeça" data-en="Headshot"></div>
+          <div class="card-desc"
+               data-pt="◆ Retrato, expressão, bust shot. Linha solta com personalidade."
+               data-en="◆ Portrait, expression, bust shot. Loose linework with personality."></div>
+          <div class="card-preco">
+            <span class="preco-symbol" data-pt="R$" data-en="$"></span>
+            <span class="preco-num" data-pt="40" data-en="15"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tipo-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">
+            <div class="icon">◎</div>
+            <span data-pt="imagem aqui" data-en="image here"></span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
+          <div class="card-nome" data-pt="Busto" data-en="Bust"></div>
+          <div class="card-desc"
+               data-pt="◆ Da cabeça à cintura. Mostra postura e roupa da parte superior."
+               data-en="◆ Head to waist. Shows posture and upper body clothing."></div>
+          <div class="card-preco">
+            <span class="preco-symbol" data-pt="R$" data-en="$"></span>
+            <span class="preco-num" data-pt="65" data-en="20"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tipo-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">
+            <div class="icon">◎</div>
+            <span data-pt="imagem aqui" data-en="image here"></span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
+          <div class="card-nome" data-pt="Corpo Todo" data-en="Full Body"></div>
+          <div class="card-desc"
+               data-pt="◆ Fullbody completo. Da cabeça às patas. Pose, roupa, tudo."
+               data-en="◆ Complete fullbody. Head to paws. Pose, outfit, everything."></div>
+          <div class="card-preco">
+            <span class="preco-symbol" data-pt="R$" data-en="$"></span>
+            <span class="preco-num" data-pt="80" data-en="30"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CORES CHAPADAS / FLAT COLORS -->
+  <section class="secao">
+    <div class="secao-label" data-pt="Cores Chapadas" data-en="Flat Colors"></div>
+    <div class="chapadas-grid">
+
+      <div class="chapadas-card">
+        <div class="chapadas-img">
+          <div class="card-img-placeholder" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
+            <div class="icon" style="font-size:28px;opacity:0.3;">◎</div>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:0.3;color:var(--text-dim);"
+                  data-pt="imagem aqui" data-en="image here"></span>
+          </div>
+        </div>
+        <div class="chapadas-body">
+          <div>
+            <div class="chapadas-tipo" data-pt="Cor Chapada" data-en="Flat Color"></div>
+            <div class="chapadas-nome" data-pt="Corpo Todo Colorido" data-en="Full Body Colored"></div>
+            <div class="chapadas-desc"
+                 data-pt="◆ Fullbody com cor plana, sem gradientes. Leitura limpa e impacto visual forte."
+                 data-en="◆ Fullbody with flat color, no gradients. Clean read and strong visual impact."></div>
+          </div>
+          <div>
+            <div class="chapadas-preco">
+              <span class="preco-symbol" data-pt="R$" data-en="$"></span>
+              <span class="preco-num" data-pt="110" data-en="40"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chapadas-card">
+        <div class="chapadas-img">
+          <div class="card-img-placeholder" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
+            <div class="icon" style="font-size:28px;opacity:0.3;">◎</div>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:0.3;color:var(--text-dim);"
+                  data-pt="imagem aqui" data-en="image here"></span>
+          </div>
+        </div>
+        <div class="chapadas-body">
+          <div>
+            <div class="chapadas-tipo" data-pt="Cor Chapada em Rascunho" data-en="Flat Color on Sketch"></div>
+            <div class="chapadas-nome" data-pt="Rascunho + Cor Plana" data-en="Sketch + Flat Color"></div>
+            <div class="chapadas-desc"
+                 data-pt="◆ A linha do rascunho original com cor chapada por cima. Estilo espontâneo e com energia."
+                 data-en="◆ Original sketch linework with flat color on top. Spontaneous style with energy."></div>
+          </div>
+          <div>
+            <div class="chapadas-preco">
+              <span class="preco-symbol" data-pt="R$" data-en=""></span>
+              <span class="preco-num" style="font-size:22px;"
+                    data-pt="Valor Base <span style='color:var(--gold-light);font-size:22px'>+20</span>"
+                    data-en="Base price <span style='color:var(--gold-light);font-size:22px'>+$5</span>"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- DESTAQUE / FEATURED -->
+<div class="wrapper">
+  <section class="destaque-section">
+    <div class="secao-label" data-pt="Arte Finalizada" data-en="Finished Art"></div>
+    <div class="destaque-card">
+      <div class="destaque-img">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(0,0,0,0.4);">
+          <div style="font-size:40px;opacity:0.2;">◎</div>
+          <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:0.25;color:var(--text-dim);"
+                data-pt="sua melhor arte aqui" data-en="your best art here"></span>
+        </div>
+      </div>
+      <div class="destaque-body">
+        <div>
+          <div class="destaque-tag" data-pt="✦ Comissão premium" data-en="✦ Premium commission"></div>
+          <div class="destaque-nome" data-pt="Colorido com<br>Sombreamento" data-en="Full Color with<br>Shading"></div>
+          <div class="destaque-desc"
+               data-pt="◆ Arte finalizada com pintura digital completa. Luz, sombra e atmosfera. O nível máximo do portfólio."
+               data-en="◆ Finished art with complete digital painting. Light, shadow and atmosphere. The highest level of the portfolio."></div>
+        </div>
+        <div class="destaque-precos">
+          <div class="destaque-preco-linha">
+            <span class="destaque-preco-tipo"
+                  data-pt="Corpo todo com Sombreamento"
+                  data-en="Full Body with Shading"></span>
+            <span class="destaque-preco-val"
+                  data-pt="R$ 215"
+                  data-en="$70"></span>
+          </div>
+          <div class="destaque-preco-linha">
+            <span class="destaque-preco-tipo"
+                  data-pt="+ Fundo Complexo"
+                  data-en="+ Complex Background"></span>
+            <span class="destaque-preco-val"
+                  data-pt="R$ 260"
+                  data-en="$85"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADICIONAIS / ADD-ONS -->
+  <section class="adicionais-section">
+    <div class="secao-label" data-pt="Adicionais" data-en="Add-ons"></div>
+    <div class="adicionais-grid">
+
+      <div class="adicional">
+        <div class="adicional-icon">▭</div>
+        <div class="adicional-nome" data-pt="Fundo Simples" data-en="Simple Background"></div>
+        <div class="adicional-desc"
+             data-pt="Cor sólida, gradiente suave ou elementos geométricos simples. Contexto sem complexidade."
+             data-en="Solid color, soft gradient or simple geometric elements. Context without complexity."></div>
+        <div class="adicional-val"
+             data-pt="+ R$ 15"
+             data-en="+ $5"></div>
+      </div>
+
+      <div class="adicional">
+        <div class="adicional-icon">✦</div>
+        <div class="adicional-nome" data-pt="Cor Chapada em Rascunho" data-en="Flat Color on Sketch"></div>
+        <div class="adicional-desc"
+             data-pt="Cor plana aplicada sobre qualquer rascunho. Valor somado ao preço base do tipo escolhido."
+             data-en="Flat color applied over any sketch. Added to the base price of the chosen type."></div>
+        <div class="adicional-val"
+             data-pt="+ R$ 20"
+             data-en="+ $5"></div>
+      </div>
+
+      <div class="adicional">
+        <div class="adicional-icon">◈</div>
+        <div class="adicional-nome" data-pt="Fundo Complexo" data-en="Complex Background"></div>
+        <div class="adicional-desc"
+             data-pt="Ambiente detalhado, cenário, elementos narrativos. Composição completa com o personagem."
+             data-en="Detailed environment, scenery, narrative elements. Full composition with the character."></div>
+        <div class="adicional-val"
+             data-pt="+ R$ 40"
+             data-en="+ $15"></div>
+      </div>
+
+      <div class="adicional">
+        <div class="adicional-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M14 4.577v6.846L8 15V1zM8.5.134a1 1 0 0 0-1 0l-6 3.577a1 1 0 0 0-.5.866v6.846a1 1 0 0 0 .5.866l6 3.577a1 1 0 0 0 1 0l6-3.577a1 1 0 0 0 .5-.866V4.577a1 1 0 0 0-.5-.866z"/>
+          </svg>
+        </div>
+        <div class="adicional-nome" data-pt="Personagens Extras" data-en="Extra Characters"></div>
+        <div class="adicional-desc"
+             data-pt="Personagens adicionais, preço variável baseado de quão complexa a arte é."
+             data-en="Additional characters, variable price based on how complex the artwork is."></div>
+        <div class="adicional-val"
+             data-pt="+ R$ 50 ~ 150"
+             data-en="+ $20 ~ $50"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TERMOS / TERMS -->
+  <section class="termos-section">
+    <div class="secao-label" data-pt="Termos gerais" data-en="General Terms"></div>
+    <div class="termos-grid">
+      <div class="termo">
+        <div class="termo-titulo" data-pt="Pagamento" data-en="Payment"></div>
+        <div class="termo-desc"
+             data-pt="50% adiantado antes de iniciar. Saldo na entrega do arquivo final."
+             data-en="50% upfront before starting. Balance due upon delivery of the final file."></div>
+      </div>
+      <div class="termo">
+        <div class="termo-titulo" data-pt="Revisões" data-en="Revisions"></div>
+        <div class="termo-desc"
+             data-pt="Até 2 revisões incluídas. Revisões adicionais são cobradas separadamente."
+             data-en="Up to 2 revisions included. Additional revisions are charged separately."></div>
+      </div>
+      <div class="termo">
+        <div class="termo-titulo" data-pt="Prazo" data-en="Deadline"></div>
+        <div class="termo-desc"
+             data-pt="Combinado individualmente. Depende da fila atual e complexidade da arte."
+             data-en="Agreed individually. Depends on current queue and artwork complexity."></div>
+      </div>
+      <div class="termo">
+        <div class="termo-titulo" data-pt="Uso" data-en="Usage"></div>
+        <div class="termo-desc"
+             data-pt="Arte para uso pessoal. Uso comercial tem valor diferenciado — perguntar antes."
+             data-en="Art for personal use. Commercial use has a different rate — ask beforehand."></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <div class="footer-handle">@sourhwolfy</div>
+  <div class="footer-contato"
+       data-pt="DMs abertas · Twitter · Bluesky · FurAffinity · Instagram"
+       data-en="DMs open · Twitter · Bluesky · FurAffinity · Instagram"></div>
+</footer>
+
+<script>
+  let currentLang = 'pt';
+
+  function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+
+    document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+    document.title = lang === 'pt' ? 'Comissões — sourhwolfy' : 'Commissions — sourhwolfy';
+
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        el.innerHTML = el.getAttribute('data-' + lang);
+      });
+      document.body.style.opacity = '1';
+    }, 180);
+  }
+
+  // Init PT
+  document.querySelectorAll('[data-pt]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-pt');
+  });
+</script>
+
+</body>
+</html>
