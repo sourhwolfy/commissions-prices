@@ -10,16 +10,16 @@
 
 <!-- Open Graph / Link Preview -->
 <meta property="og:title" content="Comissões — sourhwolfy">
-<meta property="og:description" content="Ilustração de personagens furry, fantasia e RPG. Personagens grandes, pesados e com peso real.">
+<meta property="og:description" content="Ilustração de personagens furry, fantasia e RPG.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sourhwolfy.github.io/">
 <meta name="theme-color" content="#d4af37">
-<meta name="description" content="Ilustração de personagens furry, fantasia e RPG. Personagens grandes, pesados e com peso real.">
+<meta name="description" content="Ilustração de personagens furry, fantasia e RPG.">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Comissões — sourhwolfy">
-<meta name="twitter:description" content="Ilustração de personagens furry, fantasia e RPG. Personagens grandes, pesados e com peso real.">
+<meta name="twitter:description" content="Ilustração de personagens furry, fantasia e RPG.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -76,8 +76,7 @@
     position: relative; overflow: hidden;
   }
   .header-inner {
-    max-width: min(1100px, 92vw); margin: 0 auto;
-    padding: 64px 56px 48px;
+    margin: 0 auto;
     position: relative; z-index: 1;
   }
   header::before {
@@ -93,7 +92,7 @@
     opacity: 0.03; line-height: 1; pointer-events: none; letter-spacing: -8px;
   }
   .header-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: var(--blue); margin-bottom: 20px; }
-  .header-name { font-size: clamp(52px, 8vw, 96px); font-weight: 600; letter-spacing: -3px; line-height: 0.95; color: #ece6da; margin-bottom: 6px; }
+  .header-name { font-size: clamp(38px, 7vw, 130px); font-weight: 600; letter-spacing: -3px; line-height: 0.95; color: #ece6da; margin-bottom: 6px; }
   .header-name span { color: var(--gold); font-style: italic; }
   .header-sub { font-size: 15px; color: var(--text-dim); font-style: italic; margin-top: 20px; max-width: 440px; line-height: 1.6; }
   .header-aviso {
@@ -104,7 +103,7 @@
   }
   .header-aviso::before { content: '◆'; font-size: 8px; }
 
-  .wrapper { max-width: min(1100px, 92vw); margin: 0 auto; padding: 0 56px; }
+  .wrapper { margin: 0 auto; }
   .secao { padding: 56px 0; border-bottom: 1px solid var(--line-blue); }
   .secao-label {
     font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px;
@@ -129,6 +128,57 @@
   }
   .card-img img { width: 100%; height: 100%; object-fit: contain; object-position: center; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: block; padding: 12px; }
   .tipo-card:hover .card-img img { transform: scale(1.03); }
+
+  /* CARROSSEL */
+  .carousel { position: relative; width: 100%; }
+  .carousel-track {
+    position: relative; width: 100%; overflow: hidden;
+    aspect-ratio: 3/4;
+    background: var(--bg-raised);
+    border-bottom: 1px solid var(--line-gold);
+  }
+  .chapadas-img .carousel-track { border-bottom: none; border-right: 1px solid var(--line-blue); }
+  .destaque-img .carousel-track { border-bottom: none; border-right: 1px solid var(--line-gold); }
+
+  .carousel-slide {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .carousel-slide img {
+    width: 100%; height: 100%; object-fit: contain; object-position: center;
+    display: block; padding: 12px; cursor: zoom-in;
+  }
+  .destaque-img .carousel-slide img { padding: 16px; }
+
+  .carousel-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 10; width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);
+    background: rgba(9, 11, 16, 0.75); border: 1px solid var(--line-gold);
+    color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; line-height: 1;
+    opacity: 0; transition: opacity 0.2s, background 0.2s;
+    backdrop-filter: blur(4px); -webkit-tap-highlight-color: transparent;
+  }
+  .carousel:hover .carousel-btn,
+  .carousel-btn:focus { opacity: 1; }
+  @media (hover: none) { .carousel-btn { opacity: 0.75; } }
+  .carousel-btn:hover { background: rgba(201,168,76,0.15); }
+  .carousel-btn.prev { left: 6px; }
+  .carousel-btn.next { right: 6px; }
+
+  .carousel-dots {
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 5px; z-index: 10;
+  }
+  .carousel-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--text-dim); opacity: 0.4;
+    transition: opacity 0.2s, background 0.2s;
+    cursor: pointer; border: none; padding: 0;
+  }
+  .carousel-dot.active { background: var(--gold); opacity: 1; }
+
 
   .card-img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 10px; color: var(--text-dim); }
   .card-img-placeholder .icon { font-size: 32px; opacity: 0.3; }
@@ -164,6 +214,31 @@
 
   /* DESTAQUE */
   .destaque-section { padding: 56px 0; border-bottom: 1px solid var(--line-gold); }
+  .destaque-cards-stack { display: flex; flex-direction: column; gap: 1px; }
+
+  /* Placeholder "em breve" */
+  .destaque-placeholder {
+    aspect-ratio: 3/4;
+    max-height: clamp(260px, 35vw, 620px);
+    background: rgba(0,0,0,0.3); border-right: 1px solid var(--line-gold);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; overflow: hidden; position: relative;
+  }
+  .destaque-placeholder::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 18px,
+      rgba(201,168,76,0.025) 18px, rgba(201,168,76,0.025) 19px
+    );
+  }
+  .placeholder-icon  { font-size: clamp(28px, 3vw, 40px); opacity: 0.2; position: relative; z-index: 1; }
+  .placeholder-label {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(8px, 0.7vw, 10px); letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); opacity: 0.35; position: relative; z-index: 1;
+    text-align: center; padding: 0 20px;
+  }
   .destaque-card {
     background: linear-gradient(135deg, #0d1420 0%, #090e18 100%);
     border: 1px solid var(--line-gold);
@@ -181,7 +256,7 @@
 
   .destaque-body { padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1; }
   .destaque-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-  .destaque-nome { font-size: clamp(28px, 3.5vw, 48px); font-weight: 600; color: var(--gold-light); line-height: 1.15; margin-bottom: 16px; }
+  .destaque-nome { font-size: clamp(24px, 3.2vw, 56px); font-weight: 600; color: var(--gold-light); line-height: 1.15; margin-bottom: 16px; }
   .destaque-desc { font-size: 16px; color: var(--text); font-style: italic; line-height: 1.7; margin-bottom: 32px; max-width: 360px; }
   .destaque-precos { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--line-gold); }
   .destaque-preco-linha { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: rgba(0,0,0,0.3); transition: background 0.2s; gap: 12px; }
@@ -232,141 +307,104 @@
   }
   .social-link:hover .social-icon-text { opacity: 1; }
 
-  /* RESPONSIVE */
-  /* ── TABLET (≤900px) ── */
-  @media (max-width: 900px) {
-    .wrapper, .page-footer { padding-left: 24px; padding-right: 24px; }
-    .header-inner { padding-left: 24px; padding-right: 24px; }
+  /* ═══════════════════════════════════════════
+     SISTEMA RESPONSIVO FLUIDO
+     Tudo usa clamp() — sem saltos entre breakpoints
+     ═══════════════════════════════════════════ */
 
-    /* rascunhos: 2 colunas */
-    .rascunhos-grid { grid-template-columns: 1fr 1fr; }
+  /* Wrapper fluido: padding lateral escala com a tela */
+  .wrapper {
+    max-width: 100%;
+    padding-left:  clamp(16px, 5vw, 80px);
+    padding-right: clamp(16px, 5vw, 80px);
+  }
+  .header-inner {
+    max-width: 100%;
+    padding: clamp(40px, 6vw, 72px) clamp(16px, 5vw, 80px) clamp(32px, 4vw, 56px);
+  }
+  .page-footer {
+    padding: clamp(24px, 3vw, 40px) clamp(16px, 5vw, 80px);
+  }
 
-    /* chapadas: empilha verticalmente, imagem ocupa topo */
-    .chapadas-grid { grid-template-columns: 1fr; }
+  /* Header — título escala do mobile ao ultrawide */
+  .header-sub   { font-size: clamp(13px, 1.1vw, 18px); max-width: clamp(300px, 38vw, 600px); }
+
+  /* Seções */
+  .secao        { padding: clamp(36px, 5vw, 72px) 0; }
+  .destaque-section,
+  .adicionais-section { padding: clamp(36px, 5vw, 72px) 0; }
+  .termos-section     { padding: clamp(32px, 4vw, 64px) 0 clamp(48px, 6vw, 80px); }
+  .secao-label { margin-bottom: clamp(20px, 2.5vw, 40px); font-size: clamp(8px, 0.65vw, 11px); }
+
+  /* Cards de rascunho */
+  .rascunhos-grid { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+  .card-img       { max-height: clamp(220px, 28vw, 520px); }
+  .card-body      { padding: clamp(16px, 1.8vw, 32px) clamp(18px, 2vw, 36px) clamp(20px, 2.2vw, 36px); }
+  .card-nome      { font-size: clamp(18px, 1.6vw, 28px); }
+  .card-desc      { font-size: clamp(13px, 1vw, 16px); }
+  .preco-num      { font-size: clamp(32px, 3vw, 52px); }
+  .preco-symbol   { font-size: clamp(10px, 0.9vw, 14px); }
+
+  /* Chapadas */
+  .chapadas-grid  { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
+  .chapadas-img   { max-height: clamp(240px, 30vw, 560px); }
+  .chapadas-body  { padding: clamp(20px, 2vw, 40px); }
+  .chapadas-nome  { font-size: clamp(17px, 1.5vw, 26px); }
+  .chapadas-desc  { font-size: clamp(13px, 1vw, 16px); }
+  .chapadas-preco .preco-num { font-size: clamp(26px, 2.5vw, 42px); }
+
+  /* Destaque */
+  .destaque-img   { max-height: clamp(260px, 35vw, 620px); }
+  .destaque-body  { padding: clamp(28px, 3.5vw, 64px) clamp(24px, 3vw, 56px); }
+  .destaque-desc  { font-size: clamp(13px, 1.1vw, 18px); max-width: clamp(260px, 32vw, 520px); }
+  .destaque-preco-tipo { font-size: clamp(13px, 1.1vw, 18px); }
+  .destaque-preco-val  { font-size: clamp(14px, 1.4vw, 22px); }
+  .destaque-preco-linha { padding: clamp(10px, 1vw, 18px) clamp(12px, 1.5vw, 24px); }
+
+  /* Adicionais */
+  .adicionais-grid { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+  .adicional      { padding: clamp(20px, 2.2vw, 40px); }
+  .adicional-nome { font-size: clamp(15px, 1.3vw, 22px); }
+  .adicional-desc { font-size: clamp(13px, 1vw, 16px); }
+  .adicional-val  { font-size: clamp(16px, 1.5vw, 24px); }
+
+  /* Termos */
+  .termos-grid { grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
+  .termo      { padding: clamp(18px, 1.8vw, 32px) clamp(16px, 1.5vw, 28px); }
+  .termo-desc { font-size: clamp(12px, 0.9vw, 15px); }
+
+  /* Footer social */
+  .footer-handle { font-size: clamp(10px, 0.9vw, 14px); }
+  .social-link   { font-size: clamp(8px, 0.7vw, 11px); padding: clamp(6px, 0.6vw, 10px) clamp(8px, 0.9vw, 14px); }
+
+  /* ── Breakpoints apenas para mudanças estruturais de layout ── */
+
+  /* Tablet: chapadas e destaque empilham */
+  @media (max-width: 860px) {
     .chapadas-card { grid-template-columns: 1fr; }
-    .chapadas-img {
-      aspect-ratio: 16/9; max-height: 260px;
-      border-right: none; border-bottom: 1px solid var(--line-blue);
-    }
-
-    /* destaque: empilha */
+    .chapadas-img  { aspect-ratio: 4/3; border-right: none; border-bottom: 1px solid var(--line-blue); }
     .destaque-card { grid-template-columns: 1fr; }
-    .destaque-img { aspect-ratio: 16/9; max-height: 280px; }
-    .destaque-body { padding: 32px 28px; }
-
-    .adicionais-grid { grid-template-columns: 1fr 1fr; }
-    .termos-grid { grid-template-columns: 1fr 1fr; }
-    .page-footer { flex-direction: column; gap: 16px; text-align: center; align-items: center; }
+    .destaque-img  { aspect-ratio: 4/3; }
+    .page-footer   { flex-direction: column; gap: 14px; text-align: center; align-items: center; }
     .footer-social { justify-content: center; }
   }
 
-  /* ── MOBILE (≤600px) ── */
-  @media (max-width: 600px) {
-    header { padding: 0; }
-    .header-inner { padding: 52px 20px 32px; }
-    .wrapper, .page-footer { padding-left: 16px; padding-right: 16px; }
-    .secao { padding: 40px 0; }
-    .destaque-section, .adicionais-section, .termos-section { padding: 40px 0; }
-
-    /* header menor mas legível */
-    .header-name { font-size: clamp(42px, 14vw, 72px); letter-spacing: -2px; }
-    .header-sub { font-size: 14px; }
-
-    /* lang toggle: menor e não sobrepõe header */
-    .lang-toggle { top: 16px; right: 16px; }
-    .lang-btn { padding: 7px 10px; font-size: 9px; }
-
-    /* rascunhos: 1 coluna, imagem 4:3 */
+  /* Mobile: rascunhos 1 coluna, lang toggle menor */
+  @media (max-width: 520px) {
+    .lang-toggle { top: 14px; right: 14px; }
+    .lang-btn    { padding: 7px 10px; font-size: 9px; }
     .rascunhos-grid { grid-template-columns: 1fr; }
-    .card-img { aspect-ratio: 4/3; max-height: none; }
-    .card-body { padding: 20px; }
-    .card-nome { font-size: 20px; }
-    .preco-num { font-size: 34px; }
-
-    /* chapadas: imagem menor */
-    .chapadas-img { aspect-ratio: 4/3; max-height: none; }
-    .chapadas-body { padding: 20px; }
-    .chapadas-nome { font-size: 18px; }
-
-    /* destaque */
-    .destaque-img { aspect-ratio: 4/3; max-height: none; }
-    .destaque-body { padding: 24px 20px; }
-    .destaque-nome { font-size: clamp(22px, 6vw, 32px); }
-    .destaque-desc { font-size: 14px; margin-bottom: 20px; }
-    .destaque-preco-linha { padding: 12px 14px; }
-    .destaque-preco-tipo { font-size: 13px; }
-    .destaque-preco-val { font-size: 15px; }
-
-    /* adicionais e termos: 1 coluna */
-    .adicionais-grid { grid-template-columns: 1fr; }
-    .termos-grid { grid-template-columns: 1fr 1fr; }
-    .adicional { padding: 22px 20px; }
-
-    /* footer */
-    .page-footer { padding: 28px 16px; }
-    .footer-handle { font-size: 11px; }
-    .social-link { font-size: 9px; padding: 7px 10px; }
-
-    /* zoom overlay: fecha botão maior no mobile */
-    .zoom-close { top: 16px; right: 16px; font-size: 9px; padding: 10px 14px; }
-    .zoom-hint { font-size: 8px; bottom: 16px; }
-    .zoom-overlay img { max-width: 95vw; max-height: 80vh; }
+    .card-img    { aspect-ratio: 4/3; }
+    .destaque-img { aspect-ratio: 4/3; }
+    .zoom-close  { top: 14px; right: 14px; font-size: 9px; padding: 9px 12px; }
+    .zoom-hint   { font-size: 8px; bottom: 14px; }
+    .zoom-overlay img { max-width: 95vw; max-height: 82vh; }
   }
 
-  /* ── MOBILE PEQUENO (≤380px) ── */
-  @media (max-width: 380px) {
+  /* Mobile muito pequeno */
+  @media (max-width: 360px) {
+    .header-name { font-size: 36px; }
     .termos-grid { grid-template-columns: 1fr; }
-    .adicionais-grid { grid-template-columns: 1fr; }
-    .header-name { font-size: 38px; }
-    .rascunhos-grid { grid-template-columns: 1fr; }
-  }
-  /* ── LARGE SCREEN (≥1400px) ── */
-  @media (min-width: 1400px) {
-    .wrapper,
-    .header-inner { max-width: min(1600px, 94vw); padding-left: 72px; padding-right: 72px; }
-    .page-footer { padding-left: 72px; padding-right: 72px; }
-
-    .header-name { font-size: clamp(96px, 9vw, 140px); }
-    .header-sub { font-size: 18px; max-width: 580px; }
-
-    .card-nome { font-size: 26px; }
-    .card-desc { font-size: 17px; }
-    .preco-num { font-size: 48px; }
-    .card-body { padding: 28px 32px 32px; }
-
-    .chapadas-nome { font-size: 24px; }
-    .chapadas-desc { font-size: 17px; }
-    .chapadas-body { padding: 36px; }
-    .chapadas-preco .preco-num { font-size: 38px; }
-
-    .destaque-nome { font-size: clamp(40px, 4vw, 60px); }
-    .destaque-desc { font-size: 18px; max-width: 480px; }
-    .destaque-body { padding: 60px 52px; }
-    .destaque-preco-tipo { font-size: 17px; }
-    .destaque-preco-val { font-size: 22px; }
-    .destaque-preco-linha { padding: 16px 24px; }
-
-    .adicional { padding: 36px; }
-    .adicional-nome { font-size: 20px; }
-    .adicional-desc { font-size: 17px; }
-    .adicional-val { font-size: 24px; }
-
-    .termo { padding: 28px 24px; }
-    .termo-desc { font-size: 15px; }
-
-    .card-img { max-height: 480px; }
-    .chapadas-img { max-height: 520px; }
-    .destaque-img { max-height: 580px; }
-
-    .secao-label { font-size: 11px; letter-spacing: 5px; margin-bottom: 40px; }
-  }
-
-  /* ── EXTRA LARGE (≥1800px) ── */
-  @media (min-width: 1800px) {
-    .wrapper,
-    .header-inner { max-width: 96vw; padding-left: 80px; padding-right: 80px; }
-    .page-footer { padding-left: 80px; padding-right: 80px; }
-    .header-name { font-size: clamp(120px, 10vw, 160px); }
   }
 
 </style>
@@ -386,8 +424,8 @@
   <div class="header-tag" data-pt="Comissões abertas · sourhwolfy" data-en="Commissions open · sourhwolfy"></div>
   <div class="header-name">sour<span>wolfy</span></div>
   <p class="header-sub"
-     data-pt="Ilustração de personagens furry, fantasia e RPG. Personagens grandes, pesados e com peso real."
-     data-en="Furry, fantasy and RPG character illustration. Big, heavy characters with real weight."></p>
+     data-pt="Ilustração de personagens furry, fantasia e RPG."
+     data-en="Furry, fantasy and RPG character illustration."></p>
   <div class="header-aviso"
        data-pt="DMs abertas no Twitter, Bluesky e FurAffinity"
        data-en="DMs open on Twitter, Bluesky and FurAffinity"></div>
@@ -403,8 +441,15 @@
 
       <!-- Card 1: Cabeça -->
       <div class="tipo-card">
-        <div class="card-img">
-          <img src="assets/arinor.png" alt="Rascunho de Cabeça">
+        <div class="carousel card-img" data-carousel>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="assets/crunchy.png" alt="Rascunho de Cabeça"></div>
+            <div class="carousel-slide"><img src="assets/flagelo.png" alt="Rascunho de Cabeça"></div>
+            <div class="carousel-slide"><img src="assets/meursaultbase.png" alt="Rascunho de Cabeça"></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="anterior">&#8592;</button>
+          <button class="carousel-btn next" aria-label="próximo">&#8594;</button>
+          <div class="carousel-dots"></div>
         </div>
         <div class="card-body">
           <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
@@ -421,8 +466,15 @@
 
       <!-- Card 2: Busto -->
       <div class="tipo-card">
-        <div class="card-img">
-          <img src="assets/tsu.png" alt="Rascunho de Busto">
+        <div class="carousel card-img" data-carousel>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="assets/tsu.png" alt="Rascunho de Busto"></div>
+            <div class="carousel-slide"><img src="assets/kroppuhiiri.png" alt="Rascunho de Busto"></div>
+            <div class="carousel-slide"><img src="assets/castor.png" alt="Rascunho de Busto"></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="anterior">&#8592;</button>
+          <button class="carousel-btn next" aria-label="próximo">&#8594;</button>
+          <div class="carousel-dots"></div>
         </div>
         <div class="card-body">
           <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
@@ -467,6 +519,7 @@
       <div class="chapadas-card">
         <div class="chapadas-img">
           <img src="assets/kupala.png" alt="Cores Chapadas Corpo Todo">
+          <img src="assets/ryusuibust.png" alt="Cores Chapadas Corpo Todo">
         </div>
         <div class="chapadas-body">
           <div>
@@ -485,8 +538,14 @@
 
       <!-- Chapada 2: Rascunho + cor plana -->
       <div class="chapadas-card">
-        <div class="chapadas-img">
-          <img src="assets/puma.png" alt="Rascunho com Cor Chapada">
+        <div class="carousel chapadas-img" data-carousel>
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="assets/noface.png" alt="Rascunho com Cor Chapada"></div>
+            <div class="carousel-slide"><img src="assets/puma.png" alt="Rascunho com Cor Chapada"></div>
+          </div>
+          <button class="carousel-btn prev" aria-label="anterior">&#8592;</button>
+          <button class="carousel-btn next" aria-label="próximo">&#8594;</button>
+          <div class="carousel-dots"></div>
         </div>
         <div class="chapadas-body">
           <div>
@@ -514,10 +573,20 @@
 <div class="wrapper">
   <section class="destaque-section">
     <div class="secao-label" data-pt="Arte Finalizada" data-en="Finished Art"></div>
+    <div class="destaque-cards-stack">
+
     <div class="destaque-card">
 
-      <div class="destaque-img">
-        <img src="assets/polo.png" alt="Colorido com Sombreamento">
+      <div class="carousel destaque-img" data-carousel>
+        <div class="carousel-track">
+          <div class="carousel-slide"><img src="assets/fangus.png" alt="Colorido com Sombreamento"></div>
+          <div class="carousel-slide"><img src="assets/meursault.png" alt="Colorido com Sombreamento"></div>
+          <div class="carousel-slide"><img src="assets/closeupfaceryusui.png" alt="Colorido com Sombreamento"></div>
+          <div class="carousel-slide"><img src="assets/polo.png" alt="Colorido com Sombreamento"></div>
+        </div>
+        <button class="carousel-btn prev" aria-label="anterior">&#8592;</button>
+        <button class="carousel-btn next" aria-label="próximo">&#8594;</button>
+        <div class="carousel-dots"></div>
       </div>
 
       <div class="destaque-body">
@@ -525,8 +594,8 @@
           <div class="destaque-tag" data-pt="✦ Comissão premium" data-en="✦ Premium commission"></div>
           <div class="destaque-nome" data-pt="Colorido com<br>Sombreamento" data-en="Full Color with<br>Shading"></div>
           <div class="destaque-desc"
-               data-pt="Arte finalizada com pintura digital completa. Luz, sombra e atmosfera. O nível máximo do portfólio."
-               data-en="Finished art with complete digital painting. Light, shadow and atmosphere. The highest level of the portfolio."></div>
+               data-pt="Arte finalizada com pintura digital completa. Luz, sombra e atmosfera."
+               data-en="Finished art with complete digital painting. Light, shadow and atmosphere."></div>
         </div>
         <div class="destaque-precos">
           <div class="destaque-preco-linha">
@@ -539,10 +608,12 @@
           </div>
         </div>
       </div>
-
     </div>
-  </section>
+   </div>
 
+    </div><!-- /destaque-cards-stack -->
+  </section>
+  
   <!-- ADICIONAIS -->
   <section class="adicionais-section">
     <div class="secao-label" data-pt="Adicionais" data-en="Add-ons"></div>
@@ -716,6 +787,60 @@
 </div>
 
 <script>
+  // ── CARROSSEL ──
+  function initCarousels() {
+    document.querySelectorAll('[data-carousel]').forEach(carousel => {
+      const track   = carousel.querySelector('.carousel-track');
+      const slides  = Array.from(carousel.querySelectorAll('.carousel-slide'));
+      const prevBtn = carousel.querySelector('.carousel-btn.prev');
+      const nextBtn = carousel.querySelector('.carousel-btn.next');
+      const dotsEl  = carousel.querySelector('.carousel-dots');
+      if (!slides.length) return;
+
+      let current = 0;
+
+      // Build dots
+      dotsEl.innerHTML = '';
+      slides.forEach((_, i) => {
+        const d = document.createElement('button');
+        d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        d.addEventListener('click', e => { e.stopPropagation(); goTo(i); });
+        dotsEl.appendChild(d);
+      });
+      const dots = Array.from(dotsEl.querySelectorAll('.carousel-dot'));
+
+      // Init positions
+      slides.forEach((s, i) => { s.style.transform = `translateX(${i * 100}%)`; });
+
+      function goTo(idx) {
+        current = ((idx % slides.length) + slides.length) % slides.length;
+        slides.forEach((s, i) => {
+          s.style.transform = `translateX(${(i - current) * 100}%)`;
+        });
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      prevBtn.addEventListener('click', e => { e.stopPropagation(); goTo(current - 1); });
+      nextBtn.addEventListener('click', e => { e.stopPropagation(); goTo(current + 1); });
+
+      // Swipe support
+      let startX = 0;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend',   e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousels);
+  } else {
+    initCarousels();
+  }
+</script>
+
+<script>
   const overlay = document.getElementById("zoomOverlay");
   const zoomImg = document.getElementById("zoomImg");
 
@@ -733,7 +858,7 @@
   }
 
   function attachZoomListeners() {
-    document.querySelectorAll(".card-img img, .chapadas-img img, .destaque-img img").forEach(img => {
+    document.querySelectorAll(".carousel-slide img, .card-img img, .chapadas-img img, .destaque-img img").forEach(img => {
       img.removeEventListener("click", img._zoomHandler);
       img.removeEventListener("touchstart", img._zoomTouchHandler);
 
