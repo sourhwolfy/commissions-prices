@@ -37,6 +37,13 @@
     pointer-events: none; z-index: 9999; opacity: 0.45;
   }
 
+    /* SITE CONTAINER */
+   .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    }
+
   /* LANGUAGE TOGGLE */
   .lang-toggle {
     position: fixed; top: 20px; right: 24px;
@@ -100,13 +107,18 @@
   }
   .tipo-card { background: var(--bg-card); position: relative; overflow: hidden; transition: background 0.25s; }
   .tipo-card:hover { background: var(--bg-raised); }
+  
   .card-img {
     width: 100%; aspect-ratio: 1 / 1;
+    max-height: 320px; /* [ADIÇÃO]: Trava para Rascunhos no PC */
     background: var(--bg-raised); display: flex; align-items: center; justify-content: center;
     border-bottom: 1px solid var(--line-gold); overflow: hidden;
   }
-  .card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.85; transition: opacity 0.3s, transform 0.4s; }
+  
+  /* [CORREÇÃO]: Chave fechando adicionada no final da linha abaixo */
+  .card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
   .tipo-card:hover .card-img img { opacity: 1; transform: scale(1.03); }
+  
   .card-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-dim); }
   .card-img-placeholder .icon { font-size: 32px; opacity: 0.3; }
   .card-img-placeholder span { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; }
@@ -123,9 +135,15 @@
   .chapadas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-blue); border: 1px solid var(--line-blue); }
   .chapadas-card { background: var(--bg-card); display: grid; grid-template-columns: 1fr 1fr; transition: background 0.2s; }
   .chapadas-card:hover { background: var(--bg-raised); }
-  .chapadas-img { aspect-ratio: 3/4; background: var(--bg-raised); border-right: 1px solid var(--line-blue); overflow: hidden; }
+  
+  .chapadas-img { 
+    aspect-ratio: 3/4; 
+    max-height: 480px; /* [ADIÇÃO]: Trava para Cores Chapadas no PC */
+    background: var(--bg-raised); border-right: 1px solid var(--line-blue); overflow: hidden; 
+  }
   .chapadas-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.85; transition: opacity 0.3s; }
   .chapadas-card:hover .chapadas-img img { opacity: 1; }
+  
   .chapadas-body { padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
   .chapadas-tipo { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
   .chapadas-nome { font-size: 20px; font-weight: 600; color: #e8e0d0; margin-bottom: 8px; line-height: 1.3; }
@@ -136,8 +154,14 @@
   .destaque-section { padding: 56px 0; border-bottom: 1px solid var(--line-gold); }
   .destaque-card { background: linear-gradient(135deg, #0d1420 0%, #090e18 100%); border: 1px solid var(--line-gold); display: grid; grid-template-columns: 1fr 1.2fr; overflow: hidden; position: relative; }
   .destaque-card::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%); pointer-events: none; }
-  .destaque-img { aspect-ratio: 3/4; background: rgba(0,0,0,0.3); border-right: 1px solid var(--line-gold); overflow: hidden; }
+  
+  .destaque-img { 
+    aspect-ratio: 3/4; 
+    max-height: 500px; /* [ADIÇÃO]: Trava para Destaque Premium no PC */
+    background: rgba(0,0,0,0.3); border-right: 1px solid var(--line-gold); overflow: hidden; 
+  }
   .destaque-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.9; }
+  
   .destaque-body { padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1; }
   .destaque-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
   .destaque-nome { font-size: clamp(28px, 3.5vw, 48px); font-weight: 600; color: var(--gold-light); line-height: 1.15; margin-bottom: 16px; }
@@ -184,9 +208,15 @@
     .page-footer { flex-direction: column; gap: 12px; }
   }
   @media (max-width: 600px) {
+    .container { padding: 20px 15px; }
+    .header-title { font-size: 2.4rem; }
     .rascunhos-grid { grid-template-columns: 1fr; }
     .chapadas-card { grid-template-columns: 1fr; }
-    .chapadas-img { aspect-ratio: 16/9; border-right: none; border-bottom: 1px solid var(--line-blue); }
+    
+    /* [ADIÇÃO]: As 3 classes de imagem contidas para não ficarem gigantes no celular */
+    .card-img, .chapadas-img, .destaque-img { max-height: 250px !important; aspect-ratio: 16/9 !important; }
+    
+    .chapadas-img { border-right: none; border-bottom: 1px solid var(--line-blue); }
     .adicionais-grid, .termos-grid { grid-template-columns: 1fr; }
     header { padding: 48px 28px 36px; }
     .lang-toggle { top: 14px; right: 14px; }
