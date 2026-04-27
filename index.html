@@ -37,13 +37,6 @@
     pointer-events: none; z-index: 9999; opacity: 0.45;
   }
 
-    /* SITE CONTAINER */
-   .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    }
-
   /* LANGUAGE TOGGLE */
   .lang-toggle {
     position: fixed; top: 20px; right: 24px;
@@ -107,61 +100,65 @@
   }
   .tipo-card { background: var(--bg-card); position: relative; overflow: hidden; transition: background 0.25s; }
   .tipo-card:hover { background: var(--bg-raised); }
-  
+
   .card-img {
     width: 100%; aspect-ratio: 1 / 1;
-    max-height: 320px; /* [ADIÇÃO]: Trava para Rascunhos no PC */
-    background: var(--bg-raised); display: flex; align-items: center; justify-content: center;
+    max-height: 320px;
+    background: var(--bg-raised);
     border-bottom: 1px solid var(--line-gold); overflow: hidden;
   }
-  
-  /* [CORREÇÃO]: Chave fechando adicionada no final da linha abaixo */
-  .card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-  .tipo-card:hover .card-img img { opacity: 1; transform: scale(1.03); }
-  
-  .card-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-dim); }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: block; }
+  .tipo-card:hover .card-img img { transform: scale(1.03); }
+
+  .card-img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 10px; color: var(--text-dim); }
   .card-img-placeholder .icon { font-size: 32px; opacity: 0.3; }
   .card-img-placeholder span { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; }
+
   .card-body { padding: 24px 28px 28px; }
   .card-tipo { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
   .card-nome { font-size: 22px; font-weight: 600; color: #e8e0d0; margin-bottom: 4px; line-height: 1.2; }
-  .card-desc { font-size: 16px; color: var(--text-dim); line-height: 1.4; margin-bottom: 20px; font-style: italic; min-height: 45px; }
+  .card-desc { font-size: 15px; color: var(--text-dim); line-height: 1.5; margin-bottom: 20px; font-style: italic; min-height: 45px; }
   .card-preco { display: flex; align-items: baseline; gap: 4px; }
   .preco-symbol { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--gold); opacity: 0.7; }
   .preco-num { font-size: 40px; font-weight: 600; color: var(--gold); line-height: 1; letter-spacing: -1px; }
-  .preco-alt { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-top: 5px; min-height: 16px; }
 
   /* CHAPADAS */
   .chapadas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-blue); border: 1px solid var(--line-blue); }
   .chapadas-card { background: var(--bg-card); display: grid; grid-template-columns: 1fr 1fr; transition: background 0.2s; }
   .chapadas-card:hover { background: var(--bg-raised); }
-  
-  .chapadas-img { 
-    aspect-ratio: 3/4; 
-    max-height: 480px; /* [ADIÇÃO]: Trava para Cores Chapadas no PC */
-    background: var(--bg-raised); border-right: 1px solid var(--line-blue); overflow: hidden; 
+
+  .chapadas-img {
+    aspect-ratio: 3/4;
+    max-height: 480px;
+    background: var(--bg-raised); border-right: 1px solid var(--line-blue); overflow: hidden;
   }
-  .chapadas-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.85; transition: opacity 0.3s; }
+  .chapadas-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.85; transition: opacity 0.3s; display: block; }
   .chapadas-card:hover .chapadas-img img { opacity: 1; }
-  
+
   .chapadas-body { padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
   .chapadas-tipo { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
   .chapadas-nome { font-size: 20px; font-weight: 600; color: #e8e0d0; margin-bottom: 8px; line-height: 1.3; }
-  .chapadas-desc { font-size: 16px; color: var(--text-dim); font-style: italic; line-height: 1.5; }
-  .chapadas-preco { display: flex; align-items: baseline; gap: 4px; margin-top: 20px; }
+  .chapadas-desc { font-size: 15px; color: var(--text-dim); font-style: italic; line-height: 1.5; }
+  .chapadas-preco { display: flex; align-items: baseline; gap: 4px; margin-top: 20px; flex-wrap: wrap; }
+  .chapadas-preco .preco-num { font-size: 32px; }
 
   /* DESTAQUE */
   .destaque-section { padding: 56px 0; border-bottom: 1px solid var(--line-gold); }
-  .destaque-card { background: linear-gradient(135deg, #0d1420 0%, #090e18 100%); border: 1px solid var(--line-gold); display: grid; grid-template-columns: 1fr 1.2fr; overflow: hidden; position: relative; }
-  .destaque-card::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%); pointer-events: none; }
-  
-  .destaque-img { 
-    aspect-ratio: 3/4; 
-    max-height: 500px; /* [ADIÇÃO]: Trava para Destaque Premium no PC */
-    background: rgba(0,0,0,0.3); border-right: 1px solid var(--line-gold); overflow: hidden; 
+  .destaque-card {
+    background: linear-gradient(135deg, #0d1420 0%, #090e18 100%);
+    border: 1px solid var(--line-gold);
+    display: grid; grid-template-columns: 1fr 1.2fr;
+    overflow: hidden; position: relative;
   }
-  .destaque-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.9; }
-  
+  .destaque-card::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%); pointer-events: none; }
+
+  .destaque-img {
+    aspect-ratio: 3/4;
+    max-height: 500px;
+    background: rgba(0,0,0,0.3); border-right: 1px solid var(--line-gold); overflow: hidden;
+  }
+  .destaque-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.9; display: block; }
+
   .destaque-body { padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1; }
   .destaque-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
   .destaque-nome { font-size: clamp(28px, 3.5vw, 48px); font-weight: 600; color: var(--gold-light); line-height: 1.15; margin-bottom: 16px; }
@@ -170,8 +167,7 @@
   .destaque-preco-linha { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: rgba(0,0,0,0.3); transition: background 0.2s; gap: 12px; }
   .destaque-preco-linha:hover { background: rgba(201,168,76,0.06); }
   .destaque-preco-tipo { font-size: 15px; color: var(--text); }
-  .destaque-preco-val { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--gold); white-space: nowrap; text-align: right; }
-  .destaque-preco-val .alt { display: block; font-size: 10px; color: var(--text-dim); font-weight: 400; letter-spacing: 1px; margin-top: 3px; }
+  .destaque-preco-val { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--gold); white-space: nowrap; }
 
   /* ADICIONAIS */
   .adicionais-section { padding: 56px 0; border-bottom: 1px solid var(--line-blue); }
@@ -182,7 +178,6 @@
   .adicional-nome { font-size: 17px; font-weight: 600; color: #e0d8c8; margin-bottom: 6px; }
   .adicional-desc { font-size: 15px; color: var(--text-dim); font-style: italic; line-height: 1.5; margin-bottom: 16px; }
   .adicional-val { font-family: 'Space Mono', monospace; font-size: 20px; color: var(--gold); }
-  .adicional-val .alt { display: block; font-size: 11px; color: var(--text-dim); margin-top: 4px; letter-spacing: 1px; }
 
   /* TERMOS */
   .termos-section { padding: 48px 0 64px; }
@@ -202,20 +197,15 @@
     .rascunhos-grid { grid-template-columns: 1fr 1fr; }
     .chapadas-grid { grid-template-columns: 1fr; }
     .destaque-card { grid-template-columns: 1fr; }
-    .destaque-img { aspect-ratio: 16/9; }
+    .destaque-img { aspect-ratio: 16/9; max-height: 300px; }
     .adicionais-grid { grid-template-columns: 1fr 1fr; }
     .termos-grid { grid-template-columns: 1fr 1fr; }
     .page-footer { flex-direction: column; gap: 12px; }
   }
   @media (max-width: 600px) {
-    .container { padding: 20px 15px; }
-    .header-title { font-size: 2.4rem; }
     .rascunhos-grid { grid-template-columns: 1fr; }
     .chapadas-card { grid-template-columns: 1fr; }
-    
-    /* [ADIÇÃO]: As 3 classes de imagem contidas para não ficarem gigantes no celular */
-    .card-img, .chapadas-img, .destaque-img { max-height: 250px !important; aspect-ratio: 16/9 !important; }
-    
+    .card-img, .chapadas-img, .destaque-img { max-height: 260px !important; aspect-ratio: 16/9 !important; }
     .chapadas-img { border-right: none; border-bottom: 1px solid var(--line-blue); }
     .adicionais-grid, .termos-grid { grid-template-columns: 1fr; }
     header { padding: 48px 28px 36px; }
@@ -225,12 +215,14 @@
 </head>
 <body>
 
+<!-- LANGUAGE TOGGLE -->
 <div class="lang-toggle">
   <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
   <div class="lang-divider"></div>
   <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
 </div>
 
+<!-- HEADER -->
 <header>
   <div class="header-tag" data-pt="Comissões abertas · sourhwolfy" data-en="Commissions open · sourhwolfy"></div>
   <div class="header-name">sour<span>wolfy</span></div>
@@ -244,22 +236,22 @@
 
 <div class="wrapper">
 
-  <!-- RASCUNHOS / SKETCHES -->
+  <!-- RASCUNHOS -->
   <section class="secao">
     <div class="secao-label" data-pt="Rascunhos" data-en="Sketches"></div>
     <div class="rascunhos-grid">
 
+      <!-- Card 1: Cabeça -->
       <div class="tipo-card">
-       <div class="card-img">
-		<img src="assets/arinor.png" alt="Rascunho de Cabeça">
-			</div>
+        <div class="card-img">
+          <img src="assets/arinor.png" alt="Rascunho de Cabeça">
         </div>
         <div class="card-body">
           <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
           <div class="card-nome" data-pt="Cabeça" data-en="Headshot"></div>
           <div class="card-desc"
-               data-pt="◆ Retrato, expressão, bust shot. Linha solta com personalidade."
-               data-en="◆ Portrait, expression, bust shot. Loose linework with personality."></div>
+               data-pt="Retrato, expressão, bust shot. Linha solta com personalidade."
+               data-en="Portrait, expression, bust shot. Loose linework with personality."></div>
           <div class="card-preco">
             <span class="preco-symbol" data-pt="R$" data-en="$"></span>
             <span class="preco-num" data-pt="40" data-en="15"></span>
@@ -267,35 +259,35 @@
         </div>
       </div>
 
+      <!-- Card 2: Busto -->
       <div class="tipo-card">
-		<div class="card-img">
-				<img src="assets/tsu.png" alt="Rascunho de Busto">
-			</div>
+        <div class="card-img">
+          <img src="assets/tsu.png" alt="Rascunho de Busto">
         </div>
         <div class="card-body">
           <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
           <div class="card-nome" data-pt="Busto" data-en="Bust"></div>
           <div class="card-desc"
-               data-pt="◆ Da cabeça à cintura. Mostra postura e roupa da parte superior."
-               data-en="◆ Head to waist. Shows posture and upper body clothing."></div>
+               data-pt="Da cabeça à cintura. Mostra postura e roupa da parte superior."
+               data-en="Head to waist. Shows posture and upper body clothing."></div>
           <div class="card-preco">
             <span class="preco-symbol" data-pt="R$" data-en="$"></span>
-            <span class="preco-num" data-pt="65" data-en="20"></span>
+            <span class="preco-num" data-pt="60" data-en="20"></span>
           </div>
         </div>
       </div>
 
+      <!-- Card 3: Corpo todo -->
       <div class="tipo-card">
-      	<div class="card-img">
-				<img src="assets/pairin.png" alt="Rascunho de Busto">
-			</div>
+        <div class="card-img">
+          <img src="assets/pairin.png" alt="Rascunho Corpo Todo">
         </div>
         <div class="card-body">
           <div class="card-tipo" data-pt="Rascunho" data-en="Sketch"></div>
           <div class="card-nome" data-pt="Corpo Todo" data-en="Full Body"></div>
           <div class="card-desc"
-               data-pt="◆ Fullbody completo. Da cabeça às patas. Pose, roupa, tudo."
-               data-en="◆ Complete fullbody. Head to paws. Pose, outfit, everything."></div>
+               data-pt="Fullbody completo. Da cabeça às patas. Pose, roupa, tudo."
+               data-en="Complete fullbody. Head to paws. Pose, outfit, everything."></div>
           <div class="card-preco">
             <span class="preco-symbol" data-pt="R$" data-en="$"></span>
             <span class="preco-num" data-pt="80" data-en="30"></span>
@@ -306,58 +298,49 @@
     </div>
   </section>
 
-  <!-- CORES CHAPADAS / FLAT COLORS -->
+  <!-- CORES CHAPADAS -->
   <section class="secao">
     <div class="secao-label" data-pt="Cores Chapadas" data-en="Flat Colors"></div>
     <div class="chapadas-grid">
 
+      <!-- Chapada 1: Corpo todo colorido -->
       <div class="chapadas-card">
         <div class="chapadas-img">
-          <div class="card-img-placeholder" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
-           <div class="card-img">
-			<img src="assets/kupala.png" alt="Cores Chapadas">
-			</div>
-          </div>
+          <img src="assets/kupala.png" alt="Cores Chapadas Corpo Todo">
         </div>
         <div class="chapadas-body">
           <div>
             <div class="chapadas-tipo" data-pt="Cor Chapada" data-en="Flat Color"></div>
             <div class="chapadas-nome" data-pt="Corpo Todo Colorido" data-en="Full Body Colored"></div>
             <div class="chapadas-desc"
-                 data-pt="◆ Fullbody com cor plana, sem gradientes. Leitura limpa e impacto visual forte."
-                 data-en="◆ Fullbody with flat color, no gradients. Clean read and strong visual impact."></div>
+                 data-pt="Fullbody com cor plana, sem gradientes. Leitura limpa e impacto visual forte."
+                 data-en="Fullbody with flat color, no gradients. Clean read and strong visual impact."></div>
           </div>
-          <div>
-            <div class="chapadas-preco">
-              <span class="preco-symbol" data-pt="R$" data-en="$"></span>
-              <span class="preco-num" data-pt="110" data-en="40"></span>
-            </div>
+          <div class="chapadas-preco">
+            <span class="preco-symbol" data-pt="R$" data-en="$"></span>
+            <span class="preco-num" data-pt="100" data-en="40"></span>
           </div>
         </div>
       </div>
 
+      <!-- Chapada 2: Rascunho + cor plana -->
       <div class="chapadas-card">
         <div class="chapadas-img">
-          <div class="card-img-placeholder" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
-            <div class="card-img">
-			<img src="assets/puma.png" alt="Rascunho Chapado">
-			</div>
+          <img src="assets/puma.png" alt="Rascunho com Cor Chapada">
         </div>
         <div class="chapadas-body">
           <div>
             <div class="chapadas-tipo" data-pt="Cor Chapada em Rascunho" data-en="Flat Color on Sketch"></div>
             <div class="chapadas-nome" data-pt="Rascunho + Cor Plana" data-en="Sketch + Flat Color"></div>
             <div class="chapadas-desc"
-                 data-pt="◆ A linha do rascunho original com cor chapada por cima. Estilo espontâneo e com energia."
-                 data-en="◆ Original sketch linework with flat color on top. Spontaneous style with energy."></div>
+                 data-pt="A linha do rascunho original com cor chapada por cima. Estilo espontâneo e com energia."
+                 data-en="Original sketch linework with flat color on top. Spontaneous style with energy."></div>
           </div>
-          <div>
-            <div class="chapadas-preco">
-              <span class="preco-symbol" data-pt="R$" data-en=""></span>
-              <span class="preco-num" style="font-size:22px;"
-                    data-pt="Valor Base <span style='color:var(--gold-light);font-size:22px'>+20</span>"
-                    data-en="Base price <span style='color:var(--gold-light);font-size:22px'>+$5</span>"></span>
-            </div>
+          <div class="chapadas-preco">
+            <span class="preco-symbol" data-pt="R$" data-en=""></span>
+            <span class="preco-num"
+                  data-pt="base&nbsp;<span style='color:var(--gold-light);font-size:28px'>+20</span>"
+                  data-en="base&nbsp;<span style='color:var(--gold-light);font-size:28px'>+$5</span>"></span>
           </div>
         </div>
       </div>
@@ -365,50 +348,42 @@
     </div>
   </section>
 
-</div>
+</div><!-- /wrapper -->
 
-<!-- DESTAQUE / FEATURED -->
+<!-- DESTAQUE -->
 <div class="wrapper">
   <section class="destaque-section">
     <div class="secao-label" data-pt="Arte Finalizada" data-en="Finished Art"></div>
     <div class="destaque-card">
+
       <div class="destaque-img">
-        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(0,0,0,0.4);">
-          <div class="card-img">
-			<img src="assets/polo.png" alt="Corpo Todo, Fundo Simples e Pintura">
-			</div>
+        <img src="assets/polo.png" alt="Colorido com Sombreamento">
       </div>
+
       <div class="destaque-body">
         <div>
           <div class="destaque-tag" data-pt="✦ Comissão premium" data-en="✦ Premium commission"></div>
           <div class="destaque-nome" data-pt="Colorido com<br>Sombreamento" data-en="Full Color with<br>Shading"></div>
           <div class="destaque-desc"
-               data-pt="◆ Arte finalizada com pintura digital completa. Luz, sombra e atmosfera. O nível máximo do portfólio."
-               data-en="◆ Finished art with complete digital painting. Light, shadow and atmosphere. The highest level of the portfolio."></div>
+               data-pt="Arte finalizada com pintura digital completa. Luz, sombra e atmosfera. O nível máximo do portfólio."
+               data-en="Finished art with complete digital painting. Light, shadow and atmosphere. The highest level of the portfolio."></div>
         </div>
         <div class="destaque-precos">
           <div class="destaque-preco-linha">
-            <span class="destaque-preco-tipo"
-                  data-pt="Corpo todo com Sombreamento"
-                  data-en="Full Body with Shading"></span>
-            <span class="destaque-preco-val"
-                  data-pt="R$ 215"
-                  data-en="$70"></span>
+            <span class="destaque-preco-tipo" data-pt="Corpo todo com Sombreamento" data-en="Full Body with Shading"></span>
+            <span class="destaque-preco-val" data-pt="R$ 200" data-en="$65"></span>
           </div>
           <div class="destaque-preco-linha">
-            <span class="destaque-preco-tipo"
-                  data-pt="+ Fundo Complexo"
-                  data-en="+ Complex Background"></span>
-            <span class="destaque-preco-val"
-                  data-pt="R$ 260"
-                  data-en="$85"></span>
+            <span class="destaque-preco-tipo" data-pt="+ Fundo Complexo" data-en="+ Complex Background"></span>
+            <span class="destaque-preco-val" data-pt="R$ 250" data-en="$80"></span>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- ADICIONAIS / ADD-ONS -->
+  <!-- ADICIONAIS -->
   <section class="adicionais-section">
     <div class="secao-label" data-pt="Adicionais" data-en="Add-ons"></div>
     <div class="adicionais-grid">
@@ -419,9 +394,7 @@
         <div class="adicional-desc"
              data-pt="Cor sólida, gradiente suave ou elementos geométricos simples. Contexto sem complexidade."
              data-en="Solid color, soft gradient or simple geometric elements. Context without complexity."></div>
-        <div class="adicional-val"
-             data-pt="+ R$ 15"
-             data-en="+ $5"></div>
+        <div class="adicional-val" data-pt="+ R$ 15" data-en="+ $5"></div>
       </div>
 
       <div class="adicional">
@@ -430,9 +403,7 @@
         <div class="adicional-desc"
              data-pt="Cor plana aplicada sobre qualquer rascunho. Valor somado ao preço base do tipo escolhido."
              data-en="Flat color applied over any sketch. Added to the base price of the chosen type."></div>
-        <div class="adicional-val"
-             data-pt="+ R$ 20"
-             data-en="+ $5"></div>
+        <div class="adicional-val" data-pt="+ R$ 20" data-en="+ $5"></div>
       </div>
 
       <div class="adicional">
@@ -441,30 +412,22 @@
         <div class="adicional-desc"
              data-pt="Ambiente detalhado, cenário, elementos narrativos. Composição completa com o personagem."
              data-en="Detailed environment, scenery, narrative elements. Full composition with the character."></div>
-        <div class="adicional-val"
-             data-pt="+ R$ 40"
-             data-en="+ $15"></div>
+        <div class="adicional-val" data-pt="+ R$ 40" data-en="+ $15"></div>
       </div>
 
       <div class="adicional">
-        <div class="adicional-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M14 4.577v6.846L8 15V1zM8.5.134a1 1 0 0 0-1 0l-6 3.577a1 1 0 0 0-.5.866v6.846a1 1 0 0 0 .5.866l6 3.577a1 1 0 0 0 1 0l6-3.577a1 1 0 0 0 .5-.866V4.577a1 1 0 0 0-.5-.866z"/>
-          </svg>
-        </div>
+        <div class="adicional-icon">◇</div>
         <div class="adicional-nome" data-pt="Personagens Extras" data-en="Extra Characters"></div>
         <div class="adicional-desc"
-             data-pt="Personagens adicionais, preço variável baseado de quão complexa a arte é."
-             data-en="Additional characters, variable price based on how complex the artwork is."></div>
-        <div class="adicional-val"
-             data-pt="+ R$ 50 ~ 150"
-             data-en="+ $20 ~ $50"></div>
+             data-pt="Personagens adicionais. Preço variável baseado na complexidade da arte."
+             data-en="Additional characters. Variable price based on artwork complexity."></div>
+        <div class="adicional-val" data-pt="+ R$ 50 ~ 150" data-en="+ $20 ~ $50"></div>
       </div>
 
     </div>
   </section>
 
-  <!-- TERMOS / TERMS -->
+  <!-- TERMOS -->
   <section class="termos-section">
     <div class="secao-label" data-pt="Termos gerais" data-en="General Terms"></div>
     <div class="termos-grid">
@@ -495,7 +458,7 @@
     </div>
   </section>
 
-</div>
+</div><!-- /wrapper -->
 
 <footer class="page-footer">
   <div class="footer-handle">@sourhwolfy</div>
@@ -510,12 +473,10 @@
   function setLang(lang) {
     if (lang === currentLang) return;
     currentLang = lang;
-
     document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
     document.title = lang === 'pt' ? 'Comissões — sourhwolfy' : 'Commissions — sourhwolfy';
-
     document.body.style.opacity = '0';
     setTimeout(() => {
       document.querySelectorAll('[data-pt]').forEach(el => {
