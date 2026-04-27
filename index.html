@@ -34,7 +34,7 @@
     content: '';
     position: fixed; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9999; opacity: 0.45;
+    pointer-events: none; z-index: 100; opacity: 0.45;
   }
 
   /* LANGUAGE TOGGLE */
@@ -102,12 +102,12 @@
   .tipo-card:hover { background: var(--bg-raised); }
 
   .card-img {
-    width: 100%; aspect-ratio: 1 / 1;
-    max-height: 320px;
+    width: 100%; aspect-ratio: 3 / 4;
+    max-height: 380px;
     background: var(--bg-raised);
     border-bottom: 1px solid var(--line-gold); overflow: hidden;
   }
-  .card-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: block; }
+  .card-img img { width: 100%; height: 100%; object-fit: contain; object-position: center; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: block; padding: 12px; }
   .tipo-card:hover .card-img img { transform: scale(1.03); }
 
   .card-img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; gap: 10px; color: var(--text-dim); }
@@ -129,10 +129,10 @@
 
   .chapadas-img {
     aspect-ratio: 3/4;
-    max-height: 480px;
+    max-height: 420px;
     background: var(--bg-raised); border-right: 1px solid var(--line-blue); overflow: hidden;
   }
-  .chapadas-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.85; transition: opacity 0.3s; display: block; }
+  .chapadas-img img { width: 100%; height: 100%; object-fit: contain; object-position: center; opacity: 0.9; transition: opacity 0.3s; display: block; padding: 12px; }
   .chapadas-card:hover .chapadas-img img { opacity: 1; }
 
   .chapadas-body { padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -154,10 +154,10 @@
 
   .destaque-img {
     aspect-ratio: 3/4;
-    max-height: 500px;
+    max-height: 480px;
     background: rgba(0,0,0,0.3); border-right: 1px solid var(--line-gold); overflow: hidden;
   }
-  .destaque-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.9; display: block; }
+  .destaque-img img { width: 100%; height: 100%; object-fit: contain; object-position: center; opacity: 0.9; display: block; padding: 16px; }
 
   .destaque-body { padding: 48px 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1; }
   .destaque-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
@@ -194,7 +194,8 @@
   /* RESPONSIVE */
   /* ── TABLET (≤900px) ── */
   @media (max-width: 900px) {
-    header, .wrapper, .page-footer { padding-left: 24px; padding-right: 24px; }
+    .wrapper, .page-footer { padding-left: 24px; padding-right: 24px; }
+    header > div { padding-left: 24px !important; padding-right: 24px !important; max-width: 100% !important; }
 
     /* rascunhos: 2 colunas */
     .rascunhos-grid { grid-template-columns: 1fr 1fr; }
@@ -288,6 +289,7 @@
 
 <!-- HEADER -->
 <header>
+  <div style="max-width:1100px;margin:0 auto;padding:0 56px;position:relative;z-index:1;">
   <div class="header-tag" data-pt="Comissões abertas · sourhwolfy" data-en="Commissions open · sourhwolfy"></div>
   <div class="header-name">sour<span>wolfy</span></div>
   <p class="header-sub"
@@ -296,6 +298,7 @@
   <div class="header-aviso"
        data-pt="DMs abertas no Twitter, Bluesky e FurAffinity"
        data-en="DMs open on Twitter, Bluesky and FurAffinity"></div>
+</div>
 </header>
 
 <div class="wrapper">
@@ -558,7 +561,7 @@
 
 <style>
   .zoom-overlay {
-    position: fixed; inset: 0; z-index: 99999;
+    position: fixed; inset: 0; z-index: 999999;
     background: rgba(5, 7, 12, 0.92);
     display: flex; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none;
@@ -617,16 +620,53 @@
     setTimeout(() => { zoomImg.src = ""; }, 300);
   }
 
-  document.querySelectorAll(".card-img img, .chapadas-img img, .destaque-img img").forEach(img => {
-    img.addEventListener("click", (e) => {
-      e.stopPropagation();
-      openZoom(img.src, img.alt);
-    });
-  });
+  // Aguarda imagens carregarem antes de adicionar listeners
+  function attachZoomListeners() {
+    document.querySelectorAll(".card-img img, .chapadas-img img, .destaque-img img").forEach(img => {
+      // Remove listener anterior se existir
+      img.removeEventListener("click", img._zoomHandler);
+      img.removeEventListener("touchend", img._zoomTouchHandler);
 
+      img._zoomHandler = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openZoom(img.src, img.alt);
+      };
+
+      img._zoomTouchHandler = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openZoom(img.src, img.alt);
+      };
+
+      img.addEventListener("click", img._zoomHandler);
+      img.addEventListener("touchend", img._zoomTouchHandler, { passive: false });
+    });
+  }
+
+  // Roda quando DOM está pronto
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachZoomListeners);
+  } else {
+    attachZoomListeners();
+  }
+
+  // Re-roda após troca de idioma (conteúdo não muda mas garante)
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeZoom();
   });
+
+  // Fechar clicando fora da imagem no overlay
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay || e.target.classList.contains("zoom-hint") || e.target.classList.contains("zoom-close")) {
+      closeZoom();
+    }
+  });
+  overlay.addEventListener("touchend", (e) => {
+    if (e.target === overlay || e.target.classList.contains("zoom-hint")) {
+      closeZoom();
+    }
+  }, { passive: true });
 <\/script>
 
 </body>
