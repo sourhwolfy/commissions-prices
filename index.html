@@ -192,24 +192,88 @@
   .footer-contato { font-size: 14px; color: var(--gold); font-style: italic; }
 
   /* RESPONSIVE */
+  /* ── TABLET (≤900px) ── */
   @media (max-width: 900px) {
-    header, .wrapper, .page-footer { padding-left: 28px; padding-right: 28px; }
+    header, .wrapper, .page-footer { padding-left: 24px; padding-right: 24px; }
+
+    /* rascunhos: 2 colunas */
     .rascunhos-grid { grid-template-columns: 1fr 1fr; }
+
+    /* chapadas: empilha verticalmente, imagem ocupa topo */
     .chapadas-grid { grid-template-columns: 1fr; }
+    .chapadas-card { grid-template-columns: 1fr; }
+    .chapadas-img {
+      aspect-ratio: 16/9; max-height: 260px;
+      border-right: none; border-bottom: 1px solid var(--line-blue);
+    }
+
+    /* destaque: empilha */
     .destaque-card { grid-template-columns: 1fr; }
-    .destaque-img { aspect-ratio: 16/9; max-height: 300px; }
+    .destaque-img { aspect-ratio: 16/9; max-height: 280px; }
+    .destaque-body { padding: 32px 28px; }
+
     .adicionais-grid { grid-template-columns: 1fr 1fr; }
     .termos-grid { grid-template-columns: 1fr 1fr; }
-    .page-footer { flex-direction: column; gap: 12px; }
+    .page-footer { flex-direction: column; gap: 10px; text-align: center; }
   }
+
+  /* ── MOBILE (≤600px) ── */
   @media (max-width: 600px) {
+    header { padding: 52px 20px 32px; }
+    .wrapper, .page-footer { padding-left: 16px; padding-right: 16px; }
+    .secao { padding: 40px 0; }
+    .destaque-section, .adicionais-section, .termos-section { padding: 40px 0; }
+
+    /* header menor mas legível */
+    .header-name { font-size: clamp(42px, 14vw, 72px); letter-spacing: -2px; }
+    .header-sub { font-size: 14px; }
+
+    /* lang toggle: menor e não sobrepõe header */
+    .lang-toggle { top: 16px; right: 16px; }
+    .lang-btn { padding: 7px 10px; font-size: 9px; }
+
+    /* rascunhos: 1 coluna, imagem 4:3 */
     .rascunhos-grid { grid-template-columns: 1fr; }
-    .chapadas-card { grid-template-columns: 1fr; }
-    .card-img, .chapadas-img, .destaque-img { max-height: 260px !important; aspect-ratio: 16/9 !important; }
-    .chapadas-img { border-right: none; border-bottom: 1px solid var(--line-blue); }
-    .adicionais-grid, .termos-grid { grid-template-columns: 1fr; }
-    header { padding: 48px 28px 36px; }
-    .lang-toggle { top: 14px; right: 14px; }
+    .card-img { aspect-ratio: 4/3; max-height: none; }
+    .card-body { padding: 20px; }
+    .card-nome { font-size: 20px; }
+    .preco-num { font-size: 34px; }
+
+    /* chapadas: imagem menor */
+    .chapadas-img { aspect-ratio: 4/3; max-height: none; }
+    .chapadas-body { padding: 20px; }
+    .chapadas-nome { font-size: 18px; }
+
+    /* destaque */
+    .destaque-img { aspect-ratio: 4/3; max-height: none; }
+    .destaque-body { padding: 24px 20px; }
+    .destaque-nome { font-size: clamp(22px, 6vw, 32px); }
+    .destaque-desc { font-size: 14px; margin-bottom: 20px; }
+    .destaque-preco-linha { padding: 12px 14px; }
+    .destaque-preco-tipo { font-size: 13px; }
+    .destaque-preco-val { font-size: 15px; }
+
+    /* adicionais e termos: 1 coluna */
+    .adicionais-grid { grid-template-columns: 1fr; }
+    .termos-grid { grid-template-columns: 1fr 1fr; }
+    .adicional { padding: 22px 20px; }
+
+    /* footer */
+    .page-footer { padding: 24px 16px; }
+    .footer-handle { font-size: 11px; }
+
+    /* zoom overlay: fecha botão maior no mobile */
+    .zoom-close { top: 16px; right: 16px; font-size: 9px; padding: 10px 14px; }
+    .zoom-hint { font-size: 8px; bottom: 16px; }
+    .zoom-overlay img { max-width: 95vw; max-height: 80vh; }
+  }
+
+  /* ── MOBILE PEQUENO (≤380px) ── */
+  @media (max-width: 380px) {
+    .termos-grid { grid-template-columns: 1fr; }
+    .adicionais-grid { grid-template-columns: 1fr; }
+    .header-name { font-size: 38px; }
+    .rascunhos-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -491,6 +555,79 @@
     el.innerHTML = el.getAttribute('data-pt');
   });
 </script>
+
+<style>
+  .zoom-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(5, 7, 12, 0.92);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+    cursor: zoom-out;
+    backdrop-filter: blur(6px);
+  }
+  .zoom-overlay.active { opacity: 1; pointer-events: all; }
+  .zoom-overlay img {
+    max-width: 88vw; max-height: 88vh;
+    object-fit: contain;
+    border: 1px solid rgba(201,168,76,0.3);
+    box-shadow: 0 0 80px rgba(201,168,76,0.08);
+    transform: scale(0.92);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .zoom-overlay.active img { transform: scale(1); }
+  .zoom-close {
+    position: absolute; top: 24px; right: 28px;
+    font-family: "Space Mono", monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #8a91a0; cursor: pointer;
+    padding: 8px 12px; border: 1px solid rgba(201,168,76,0.18);
+    background: #0e1018; transition: color 0.2s, border-color 0.2s;
+  }
+  .zoom-close:hover { color: #d4af37; border-color: #d4af37; }
+  .zoom-hint {
+    position: absolute; bottom: 24px;
+    font-family: "Space Mono", monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: #8a91a0; opacity: 0.5;
+  }
+  .card-img img, .chapadas-img img, .destaque-img img { cursor: zoom-in; }
+</style>
+
+<div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+  <div class="zoom-close" onclick="closeZoom()">ESC · fechar</div>
+  <img id="zoomImg" src="" alt="">
+  <div class="zoom-hint">clique em qualquer lugar ou ESC para fechar</div>
+</div>
+
+<script>
+  const overlay = document.getElementById("zoomOverlay");
+  const zoomImg = document.getElementById("zoomImg");
+
+  function openZoom(src, alt) {
+    zoomImg.src = src;
+    zoomImg.alt = alt || "";
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeZoom() {
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+    setTimeout(() => { zoomImg.src = ""; }, 300);
+  }
+
+  document.querySelectorAll(".card-img img, .chapadas-img img, .destaque-img img").forEach(img => {
+    img.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openZoom(img.src, img.alt);
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeZoom();
+  });
+<\/script>
 
 </body>
 </html>
