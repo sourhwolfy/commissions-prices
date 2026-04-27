@@ -138,16 +138,15 @@
 
   /* CARROSSEL */
   .carousel { position: relative; width: 100%; }
-  .card-img.carousel { min-height: unset; }
-  .card-img.carousel .carousel-track { min-height: unset; }
+  .card-img.carousel { min-height: clamp(200px, 22vw, 420px); height: clamp(200px, 22vw, 420px); }
+  .card-img.carousel .carousel-track { min-height: unset; height: 100%; }
   .carousel-track {
     position: relative; width: 100%; overflow: hidden;
     background: var(--bg-raised);
     border-bottom: 1px solid var(--line-gold);
-    aspect-ratio: 3/4;
   }
-  .chapadas-img .carousel-track { border-bottom: none; border-right: 1px solid var(--line-blue); }
-  .destaque-img .carousel-track { border-bottom: none; border-right: 1px solid var(--line-gold); }
+  .chapadas-img .carousel-track { border-bottom: none; border-right: 1px solid var(--line-blue); height: 100%; }
+  .destaque-img .carousel-track { border-bottom: none; border-right: 1px solid var(--line-gold); height: 100%; }
 
   .carousel-slide {
     position: absolute; inset: 0; width: 100%; height: 100%;
@@ -159,7 +158,8 @@
     object-fit: contain; object-position: center;
     display: block; padding: 16px; cursor: zoom-in;
   }
-  .destaque-img .carousel-slide img { padding: 16px; }
+  .chapadas-img .carousel-slide img,
+  .destaque-img .carousel-slide img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
 
   .carousel-btn {
     position: absolute; top: 50%; transform: translateY(-50%);
@@ -348,10 +348,9 @@
 
   /* Cards de rascunho — sempre 3 colunas alinhadas */
   .rascunhos-grid { grid-template-columns: repeat(3, 1fr); }
-  .card-img { aspect-ratio: 3/4; min-height: unset; }
-  .card-img img, .card-img.carousel { max-height: none; }
-  .carousel-track { aspect-ratio: 3/4; }
-  .carousel-slide { position: absolute; inset: 0; }
+  .card-img { min-height: clamp(200px, 22vw, 420px); }
+  .card-img img { max-height: clamp(200px, 22vw, 420px); }
+  .card-img.carousel { min-height: clamp(200px, 22vw, 420px); }
   .card-body      { padding: clamp(16px, 1.8vw, 32px) clamp(18px, 2vw, 36px) clamp(20px, 2.2vw, 36px); }
   .card-nome      { font-size: clamp(18px, 1.6vw, 28px); }
   .card-desc      { font-size: clamp(13px, 1vw, 16px); }
@@ -407,8 +406,8 @@
     .lang-toggle { top: 14px; right: 14px; }
     .lang-btn    { padding: 7px 10px; font-size: 9px; }
     .rascunhos-grid { grid-template-columns: 1fr; }
-    .card-img    { aspect-ratio: 4/3; }
-    .carousel-track { aspect-ratio: 4/3; }
+    .card-img    { min-height: 260px; }
+    .card-img img { max-height: 260px; }
     .destaque-img { aspect-ratio: 4/3; }
     .zoom-close  { top: 14px; right: 14px; font-size: 9px; padding: 9px 12px; }
     .zoom-hint   { font-size: 8px; bottom: 14px; }
@@ -542,7 +541,8 @@
       <!-- Chapada 1: Corpo todo colorido -->
       <div class="chapadas-card">
         <div class="chapadas-img">
-          <img src="assets/kupala.png" alt="Cores Chapadas Corpo Todo">
+          <div class="carousel-slide"><img src="assets/kupala.png" alt="Cores Chapadas Corpo Todo"></div>
+          <div class="carousel-slide"><img src="assets/ryusuibust.png" alt="Cores Chapadas Corpo Todo"></div>
         </div>
         <div class="chapadas-body">
           <div>
@@ -563,8 +563,8 @@
       <div class="chapadas-card">
         <div class="carousel chapadas-img" data-carousel>
           <div class="carousel-track">
-            <div class="carousel-slide"><img src="assets/puma.png" alt="Rascunho com Cor Chapada"></div>
             <div class="carousel-slide"><img src="assets/noface.png" alt="Rascunho com Cor Chapada"></div>
+            <div class="carousel-slide"><img src="assets/puma.png" alt="Rascunho com Cor Chapada"></div>
           </div>
           <button class="carousel-btn prev" aria-label="anterior">&#8592;</button>
           <button class="carousel-btn next" aria-label="próximo">&#8594;</button>
@@ -603,10 +603,10 @@
 
       <div class="carousel destaque-img" data-carousel>
         <div class="carousel-track">
-          <div class="carousel-slide"><img src="assets/polo.png" alt="Colorido com Sombreamento"></div>
-          <div class="carousel-slide"><img src="assets/fangus.png" alt="Colorido com Sombreamento"></div>
           <div class="carousel-slide"><img src="assets/meursault.png" alt="Colorido com Sombreamento"></div>
+          <div class="carousel-slide"><img src="assets/fangus.png" alt="Colorido com Sombreamento"></div>
           <div class="carousel-slide"><img src="assets/closeupfaceryusui.png" alt="Colorido com Sombreamento"></div>
+          <div class="carousel-slide"><img src="assets/polo.png" alt="Colorido com Sombreamento"></div>
         </div>
         <button class="carousel-btn prev" aria-label="anterior">&#8592;</button>
         <button class="carousel-btn next" aria-label="próximo">&#8594;</button>
